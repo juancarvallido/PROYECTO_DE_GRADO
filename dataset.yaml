@@ -1,0 +1,4 @@
+train: C:\Users\Usuario\Desktop\proyecto3rabano3\pythonProject\Data\train\
+val: C:\Users\Usuario\Desktop\proyecto3rabano3\pythonProject\Data\val\
+nc: 1
+names: ["rabano"]
