@@ -77,9 +77,9 @@ plt.show()
 '''
 
 
-#######################################################################
-############### CODIGO DE ALTURA BUENO ################################
-#######################################################################
+##################################################################
+############### CODIGO DE ALTURA  ################################
+##################################################################
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -144,66 +144,6 @@ plt.show()
 
 #######################################################################################################
 #######################################################################################################
-
-
-
-
-
-
-import cv2
-import os
-
-def calcular_altura_plantas(ruta_imagenes_segmentadas):
-    # Obtener la lista de nombres de archivos de la carpeta
-    archivos = os.listdir(ruta_imagenes_segmentadas)
-
-    # Bucle sobre cada archivo de imagen en la carpeta
-    for archivo in archivos:
-        # Construir la ruta completa de la imagen
-        ruta_imagen = os.path.join(ruta_imagenes_segmentadas, archivo)
-
-        # Leer la imagen desde la ruta
-        imagen = cv2.imread(ruta_imagen)
-
-        # Convertir la imagen a escala de grises
-        imagen_gris = cv2.cvtColor(imagen, cv2.COLOR_BGR2GRAY)
-
-        # Aplicar umbral para obtener la máscara de la planta segmentada
-        _, mascara = cv2.threshold(imagen_gris, 240, 255, cv2.THRESH_BINARY)
-
-        # Encontrar contornos en la máscara
-        contornos, _ = cv2.findContours(mascara, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-        # Encontrar el contorno más grande
-        contorno_mas_grande = max(contornos, key=cv2.contourArea)
-
-        # Calcular el rectángulo delimitador del contorno más grande
-        x, y, w, h = cv2.boundingRect(contorno_mas_grande)
-
-        # Dibujar el contorno más grande en la imagen original
-        cv2.drawContours(imagen, [contorno_mas_grande], -1, (0, 255, 0), 2)
-
-        # Redimensionar la imagen para que se ajuste a la pantalla
-        alto, ancho, _ = imagen.shape
-        factor_escala = 600 / alto  # Redimensionar a una altura de 600 píxeles
-        imagen_redimensionada = cv2.resize(imagen, (int(ancho * factor_escala), int(alto * factor_escala)))
-
-        # Mostrar la imagen con el contorno más grande
-        cv2.imshow("Contorno más grande", imagen_redimensionada)
-        cv2.waitKey(0)
-
-        # Calcular la altura de la planta (altura del rectángulo delimitador)
-        altura_planta = h
-
-        print(f"Altura de la planta en {archivo}: {altura_planta} píxeles")
-
-if __name__ == "__main__":
-    ruta_imagenes_segmentadas = input("Por favor, ingresa la ruta donde tienes las imágenes segmentadas de tus plantas de rábano: ")
-    calcular_altura_plantas(ruta_imagenes_segmentadas)
-
-
-
-
 
 
 
